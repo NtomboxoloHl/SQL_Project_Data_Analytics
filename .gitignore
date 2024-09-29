@@ -5,3 +5,5 @@ csv_files-20240915T195517Z-001/csv_files/job_postings_fact.csv
 csv_files-20240915T195517Z-001/csv_files/skills_dim.csv
 csv_files-20240915T195517Z-001/csv_files/skills_job_dim.csv
 .vscode/settings.json
+sql_course.session.sql
+postgres.session.sql
