@@ -4,23 +4,26 @@
     -Why? It provides a detailed look at which high-paying jobs demand certain skills,
         helping job seekers understand which skills to develop that aligns with top salaries. */
 WITH top_paying_jobs AS (
-    SELECT
-            job_id,
-            job_title,
-            salary_year_avg,
-            job_posted_date,
-            name AS company_name
-    FROM
-            job_postings_fact
-    --Let's also find out the company name of these role, now we're gonna join company_dim with job_postings_facts.
-    LEFT JOIN company_dim ON job_postings_fact.company_id = company_dim.company_id
-    WHERE 
+   SELECT
+        job_id,
+        job_title,
+        job_location,
+        job_schedule_type,
+        ROUND(salary_year_avg,2)* 19 AS annual_salary_avg,
+        job_posted_date,
+        name AS company_name
+FROM
+        job_postings_fact
+--Let's also find out the company name of these role, now we're gonna join company_dim with job_postings_facts.
+LEFT JOIN company_dim ON 
+        job_postings_fact.company_id = company_dim.company_id
+WHERE
         job_title_short = 'Data Scientist' AND
         job_country = 'South Africa' AND 
         salary_year_avg IS NOT NULL
-    ORDER BY
+ORDER BY
         salary_year_avg DESC
-    LIMIT 10
+LIMIT 10
 )
 
 /*We're gonna need to connect the skills_job_dim and skills_dim 
@@ -35,4 +38,6 @@ INNER JOIN skills_job_dim ON
 INNER JOIN skills_dim ON
          skills_job_dim.skill_id = skills_dim.skill_id
 ORDER BY 
-    salary_year_avg DESC;
+    annual_salary_avg DESC;
+
+
